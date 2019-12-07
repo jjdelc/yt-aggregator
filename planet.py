@@ -1,4 +1,4 @@
-
+import sys
 from os.path import basename
 from datetime import datetime
 from urllib.parse import urlparse
@@ -38,6 +38,7 @@ box-sizing: border-box;
 font-size: 1rem;
 }
 """
+TITLE = "Transformers toy reviews"
 
 CHANNELS = [
 "UCTitdGNU65UUwEG75sWoLEA",  # Cybertron 21
@@ -96,7 +97,6 @@ BASE_HTML = """<!doctype html>
 </html>
 """
 
-OUTPUT = "page.html"
 
 def parse_tagname(tag):
     return tag.split("}", 1)[1]
@@ -119,6 +119,7 @@ def entry_2_html(entry):
 
 
 def main():
+    output = sys.argv[1]
     all_entries = []
     for channel_id in CHANNELS[:]:
         rss = urlopen(RSS_FEED % channel_id).read()
@@ -128,11 +129,11 @@ def main():
     all_entries = reversed(sorted(all_entries, key=lambda e: e["published"]))
     html_entries = [entry_2_html(e) for e in all_entries[:MAX_ENTRIES]]
     html = BASE_HTML.format(
-        title="YT Feed",
+        title=TITLE,
         feed="\n".join(html_entries),
         css=CSS
     )
-    with open(OUTPUT, "w") as fh:
+    with open(output, "w") as fh:
         fh.write(html)
 
 
