@@ -37,6 +37,14 @@ box-sizing: border-box;
 .video-info h1 {
 font-size: 1rem;
 }
+.author {
+font-size: 0.9rem;
+}
+.video-info datetime {
+font-size: 0.75rem;
+font-style: italic;
+color: #AAA;
+}
 """
 TITLE = "Transformers toy reviews"
 
@@ -72,6 +80,7 @@ CHANNELS = [
 RSS_FEED = "https://www.youtube.com/feeds/videos.xml?channel_id=%s"
 RSS_URL = "https://www.youtube.com/channel/{}/"
 ENTRY_TAG = "{http://www.w3.org/2005/Atom}entry"
+AUTHOR_TAG = "{http://www.w3.org/2005/Atom}author"
 PREVIEW_IMG = "https://i.ytimg.com/vi/{}/hqdefault.jpg"
 WATCH_URL = "https://www.youtube.com/watch?v={}"
 MAX_ENTRIES = 100
@@ -80,6 +89,8 @@ FEED_ITEM = """<li>
 <img src="{image}" loading="lazy" class="preview"/>
 <div class="video-info">
 <h1>{title}</h1>
+<p class="author">{author}</p>
+<datetime>{published}</datetime>
 </div>
 </a>
 </li>"""
@@ -101,8 +112,9 @@ BASE_HTML = """<!doctype html>
 def parse_tagname(tag):
     return tag.split("}", 1)[1]
 
-def read_entry(entry):
+def read_entry(entry, author):
     result = {parse_tagname(e.tag): e.text for e in entry}
+    result["author"] = author
     result["published"] = datetime.strptime(result['published'][:19], "%Y-%m-%dT%H:%M:%S")
     return result
 
@@ -111,8 +123,15 @@ def process_entry(entry):
         "title": entry["title"],
         "image": PREVIEW_IMG.format(entry["videoId"]),
         "link": WATCH_URL.format(entry["videoId"]),
+        "published": entry["published"].strftime("%b %d"),
+        "author": entry["author"]["name"]
     }
 
+
+def feed_author(root):
+    author = [a for a in root if a.tag == AUTHOR_TAG][0]
+    result = {parse_tagname(e.tag): e.text for e in author}
+    return result
 
 def entry_2_html(entry):
     return FEED_ITEM.format(**process_entry(entry))
@@ -121,13 +140,16 @@ def entry_2_html(entry):
 def main():
     output = sys.argv[1]
     all_entries = []
-    for channel_id in CHANNELS[:]:
+    for channel_id in CHANNELS:
         rss = urlopen(RSS_FEED % channel_id).read()
         root = ET.fromstring(rss)
-        entries = [read_entry(e) for e in root if e.tag == ENTRY_TAG]
+        author = feed_author(root)
+        entries = [read_entry(e, author) for e in root if e.tag == ENTRY_TAG]
         all_entries.extend(entries)
-    all_entries = reversed(sorted(all_entries, key=lambda e: e["published"]))
-    html_entries = [entry_2_html(e) for e in all_entries[:MAX_ENTRIES]]
+        print("Processing {} - {} videos".format(author["name"], len(entries)))
+
+    all_entries = reversed(sorted(all_entries[:MAX_ENTRIES], key=lambda e: e["published"]))
+    html_entries = [entry_2_html(e) for e in all_entries]
     html = BASE_HTML.format(
         title=TITLE,
         feed="\n".join(html_entries),
