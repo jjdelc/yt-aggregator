@@ -47,6 +47,7 @@ color: #AAA;
 }
 """
 TITLE = "Transformers toy reviews"
+DESCRIPTION = "Feed of Youtube Transformers reviewers"
 
 CHANNELS = [
 "UCTitdGNU65UUwEG75sWoLEA",  # Cybertron 21
@@ -99,6 +100,9 @@ FEED_ITEM = """<li>
 BASE_HTML = """<!doctype html>
 <html>
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, user-scalable=yes, initial-scale=1" />
+<meta name="description" content="{description}"/>
 <title>{title}</title>
 <style>{css}</style>
 </head>
@@ -153,6 +157,7 @@ def main():
     html = BASE_HTML.format(
         title=TITLE,
         feed="\n".join(html_entries),
+        description=DESCRIPTION,
         css=CSS
     )
     with open(output, "w") as fh:
