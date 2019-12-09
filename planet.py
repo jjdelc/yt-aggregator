@@ -76,6 +76,7 @@ CHANNELS = [
 "UCzo0rWyQdCznorrvd-OzEBA",  # Masterpiece Reanimated
 "UCA5e8vqo-aJpZtd7EEDEuDg",  # Transform My Transformers
 "UCvU4TcenqcDTrkxaqGEedfw",  # Starscreamer
+"UC70F5cxWj0AeZfbbjJg-eGg",  # JobbytheHong
 ]
 
 RSS_FEED = "https://www.youtube.com/feeds/videos.xml?channel_id=%s"
