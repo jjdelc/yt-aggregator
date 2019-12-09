@@ -21,7 +21,7 @@ border: 1px solid #EEE;
 }
 .main-feed a {
 display: grid;
-grid-template-columns: 30% auto;
+grid-template-columns: 40% auto;
 text-decoration: none;
 color: #444;
 }
