@@ -85,7 +85,7 @@ ENTRY_TAG = "{http://www.w3.org/2005/Atom}entry"
 AUTHOR_TAG = "{http://www.w3.org/2005/Atom}author"
 PREVIEW_IMG = "https://i.ytimg.com/vi/{}/hqdefault.jpg"
 WATCH_URL = "https://www.youtube.com/watch?v={}"
-MAX_ENTRIES = 100
+MAX_ENTRIES = 200
 FEED_ITEM = """<li>
 <a href="{link}">
 <img src="{image}" loading="lazy" class="preview"/>
@@ -153,8 +153,8 @@ def main():
         all_entries.extend(entries)
         print("Processing {} - {} videos".format(author["name"], len(entries)))
 
-    all_entries = reversed(sorted(all_entries[:MAX_ENTRIES], key=lambda e: e["published"]))
-    html_entries = [entry_2_html(e) for e in all_entries]
+    all_entries = reversed(sorted(all_entries, key=lambda e: e["published"]))
+    html_entries = [entry_2_html(e) for e in list(all_entries)[:MAX_ENTRIES]]
     html = BASE_HTML.format(
         title=TITLE,
         feed="\n".join(html_entries),
