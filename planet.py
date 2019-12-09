@@ -85,7 +85,7 @@ ENTRY_TAG = "{http://www.w3.org/2005/Atom}entry"
 AUTHOR_TAG = "{http://www.w3.org/2005/Atom}author"
 PREVIEW_IMG = "https://i.ytimg.com/vi/{}/hqdefault.jpg"
 WATCH_URL = "https://www.youtube.com/watch?v={}"
-MAX_ENTRIES = 200
+MAX_ENTRIES = 100
 FEED_ITEM = """<li>
 <a href="{link}">
 <img src="{image}" loading="lazy" class="preview"/>
