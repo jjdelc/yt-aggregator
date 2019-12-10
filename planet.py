@@ -77,6 +77,7 @@ CHANNELS = [
 "UCA5e8vqo-aJpZtd7EEDEuDg",  # Transform My Transformers
 "UCvU4TcenqcDTrkxaqGEedfw",  # Starscreamer
 "UC70F5cxWj0AeZfbbjJg-eGg",  # JobbytheHong
+"UCVRX-xxa69loL7-Ac2vAF_w",  # PrimeVsPrime
 ]
 
 RSS_FEED = "https://www.youtube.com/feeds/videos.xml?channel_id=%s"
