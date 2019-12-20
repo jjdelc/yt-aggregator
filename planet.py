@@ -156,7 +156,6 @@ BASE_HTML = """<!doctype html>
 <style>{css}</style>
 </head>
 <body>
-<<<<<<< HEAD
 <header>
   <a href="https://www.lostlight.net/" target="_blank">Lostlight - Personal Transformers inventory</a>
 </header>
@@ -164,19 +163,16 @@ BASE_HTML = """<!doctype html>
 <form class="content" id="doFilter">
   <input id="filterField" type="search" placeholder="Search videos"/> <input type="submit" value="Search"/>
 </form>
-    <ol class="main-feed content" id="videoList">{feed}</ol>
-<script>
-{js}
-=======
-    <ol class="main-feed">{feed}</ol>
+<ol class="main-feed content" id="videoList">{feed}</ol>
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-86526390-2"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){{dataLayer.push(arguments);}}
   gtag('js', new Date());
-
   gtag('config', 'UA-86526390-2');
->>>>>>> f9cd3f2b3c9ed4c9100246f01a837cffb67d455c
+</script>
+<script>
+{js}
 </script>
 </body>
 </html>
