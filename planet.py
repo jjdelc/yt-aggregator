@@ -7,13 +7,17 @@ import xml.etree.ElementTree as ET
 
 CSS = """
 body {
+padding: 0;
+margin: 0;
 font-family: sans-serif;
 }
-.main-feed {
-list-style: None;
+.content {
 max-width: 40rem;
 margin: 0 auto;
 padding: 0;
+}
+.main-feed {
+list-style: None;
 }
 .main-feed li {
 margin-bottom: 0.5rem;
@@ -45,7 +49,49 @@ font-size: 0.75rem;
 font-style: italic;
 color: #AAA;
 }
+#doFilter {
+  display: grid;
+  grid-template-columns: 80% auto;
+  margin: 5px auto;
+}
+header {
+  background: #BBB;
+  text-align: right;
+  margin: 0;
+}
+header a {
+  text-decoration:  none;
+  color: white;
+  margin: 0;
+  font-size: 0.75rem;
+}
+h1 {
+  font-size: 1.2rem;
+}
 """
+
+JS = """
+const doFilter = document.getElementById("doFilter");
+const filterField = document.getElementById("filterField");
+const videoList = document.getElementById("videoList");
+doFilter.onsubmit = () => {
+    const searchText = filterField.value.toLowerCase();
+    const emptyCb = el => {
+        el.style.display = "block";
+    }
+    const searchCb = el => {
+    	if (el.dataset.search.toLowerCase().includes(searchText)) {
+            el.style.display = "block";
+        } else {
+            el.style.display = "none";
+        }
+    }
+    const callback = !!searchText?searchCb:emptyCb;
+    [...videoList.children].forEach(callback);
+    return false;
+};
+"""
+
 TITLE = "Transformers toy reviews"
 DESCRIPTION = "Feed of Youtube Transformers reviewers"
 
@@ -80,14 +126,14 @@ CHANNELS = [
 "UCVRX-xxa69loL7-Ac2vAF_w",  # PrimeVsPrime
 ]
 
-RSS_FEED = "https://www.youtube.com/feeds/videos.xml?channel_id=%s"
+RSS_FEED = "https://www.youtube.com/feeds/videos.xml?channel_id={}"
 RSS_URL = "https://www.youtube.com/channel/{}/"
 ENTRY_TAG = "{http://www.w3.org/2005/Atom}entry"
 AUTHOR_TAG = "{http://www.w3.org/2005/Atom}author"
 PREVIEW_IMG = "https://i.ytimg.com/vi/{}/hqdefault.jpg"
 WATCH_URL = "https://www.youtube.com/watch?v={}"
 MAX_ENTRIES = 100
-FEED_ITEM = """<li>
+FEED_ITEM = """<li data-search="{search}">
 <a href="{link}">
 <img src="{image}" loading="lazy" class="preview"/>
 <div class="video-info">
@@ -109,7 +155,17 @@ BASE_HTML = """<!doctype html>
 <style>{css}</style>
 </head>
 <body>
-    <ol class="main-feed">{feed}</ol>
+<header>
+  <a href="https://www.lostlight.net/" target="_blank">Lostlight - Personal Transformers inventory</a>
+</header>
+<h1 class="content">Transformers reviews</h1>
+<form class="content" id="doFilter">
+  <input id="filterField" type="search" placeholder="Search videos"/> <input type="submit" value="Search"/>
+</form>
+    <ol class="main-feed content" id="videoList">{feed}</ol>
+<script>
+{js}
+</script>
 </body>
 </html>
 """
@@ -118,11 +174,13 @@ BASE_HTML = """<!doctype html>
 def parse_tagname(tag):
     return tag.split("}", 1)[1]
 
+
 def read_entry(entry, author):
     result = {parse_tagname(e.tag): e.text for e in entry}
     result["author"] = author
     result["published"] = datetime.strptime(result['published'][:19], "%Y-%m-%dT%H:%M:%S")
     return result
+
 
 def process_entry(entry):
     return {
@@ -130,7 +188,8 @@ def process_entry(entry):
         "image": PREVIEW_IMG.format(entry["videoId"]),
         "link": WATCH_URL.format(entry["videoId"]),
         "published": entry["published"].strftime("%b %d"),
-        "author": entry["author"]["name"]
+        "author": entry["author"]["name"],
+        "search": "{} {}".format(entry["title"], entry["author"]["name"])
     }
 
 
@@ -138,6 +197,7 @@ def feed_author(root):
     author = [a for a in root if a.tag == AUTHOR_TAG][0]
     result = {parse_tagname(e.tag): e.text for e in author}
     return result
+
 
 def entry_2_html(entry):
     return FEED_ITEM.format(**process_entry(entry))
@@ -147,7 +207,7 @@ def main():
     output = sys.argv[1]
     all_entries = []
     for channel_id in CHANNELS:
-        rss = urlopen(RSS_FEED % channel_id).read()
+        rss = urlopen(RSS_FEED.format(channel_id)).read()
         root = ET.fromstring(rss)
         author = feed_author(root)
         entries = [read_entry(e, author) for e in root if e.tag == ENTRY_TAG]
@@ -160,7 +220,8 @@ def main():
         title=TITLE,
         feed="\n".join(html_entries),
         description=DESCRIPTION,
-        css=CSS
+        css=CSS,
+        js=JS
     )
     with open(output, "w") as fh:
         fh.write(html)
