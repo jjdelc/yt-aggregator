@@ -163,8 +163,8 @@ BASE_HTML = """<!doctype html>
 <body>
 <header>
   <a href="https://www.lostlight.net/" target="_blank">Lostlight - Personal Transformers inventory</a>
-</header>
 <h1 class="content">Transformers reviews</h1>
+</header>
 <form class="content" id="doFilter">
   <input id="filterField" type="search" placeholder="Search videos"/> <input type="submit" value="Search"/>
 </form>
