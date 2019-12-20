@@ -71,6 +71,7 @@ header h1 {
   font-size: 1.2rem;
   line-height: 190%;
   text-align: left;
+  color: #555;
 }
 """
 
