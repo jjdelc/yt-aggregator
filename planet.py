@@ -54,19 +54,23 @@ color: #AAA;
   grid-template-columns: 80% auto;
   margin: 5px auto;
 }
+#filterField {
+line-height: 1.4rem;
+}
 header {
-  background: #AAA;
   text-align: right;
   margin: 0;
 }
 header a {
   text-decoration:  none;
-  color: white;
+  color: #888;
   margin: 0;
   font-size: 0.75rem;
 }
-h1 {
+header h1 {
   font-size: 1.2rem;
+  line-height: 190%;
+  text-align: left;
 }
 """
 
