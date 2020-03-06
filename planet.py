@@ -54,6 +54,9 @@ color: #AAA;
   grid-template-columns: 80% auto;
   margin: 5px auto;
 }
+#filterField {
+line-height: 1.4rem;
+}
 header {
   background: #888;
   text-align: right;
@@ -61,12 +64,15 @@ header {
 }
 header a {
   text-decoration:  none;
-  color: white;
+  color: #888;
   margin: 0;
   font-size: 0.75rem;
 }
-h1 {
+header h1 {
   font-size: 1.2rem;
+  line-height: 190%;
+  text-align: left;
+  color: #555;
 }
 """
 
@@ -158,8 +164,8 @@ BASE_HTML = """<!doctype html>
 <body>
 <header>
   <a href="https://www.lostlight.net/" target="_blank">Lostlight - Personal Transformers inventory</a>
-</header>
 <h1 class="content">Transformers reviews</h1>
+</header>
 <form class="content" id="doFilter">
   <input id="filterField" type="search" placeholder="Search videos"/> <input type="submit" value="Search"/>
 </form>
