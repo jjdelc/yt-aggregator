@@ -55,7 +55,7 @@ color: #AAA;
   margin: 5px auto;
 }
 header {
-  background: #AAA;
+  background: #888;
   text-align: right;
   margin: 0;
 }
