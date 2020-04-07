@@ -64,7 +64,6 @@ header {
 }
 header a {
   text-decoration:  none;
-  color: #888;
   margin: 0;
   font-size: 0.75rem;
 }
