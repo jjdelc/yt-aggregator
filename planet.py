@@ -58,7 +58,6 @@ color: #AAA;
 line-height: 1.4rem;
 }
 header {
-  background: #888;
   text-align: right;
   margin: 0;
 }
