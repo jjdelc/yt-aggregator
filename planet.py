@@ -133,6 +133,7 @@ CHANNELS = [
 "UCF3H90k_0pxZfPIo6Dv99tg",  # UltraPrimal
 "UCY8cdfayYVQc4hqrSWXu4yQ",  # RobsteinOne
 "UCbhS8EgR7Z5RVe-an1jRLiQ",  # PandaJack Productions
+"UC8ahRx5Pg4sXvSYS6wgaU8g",  # Sixo
 ]
 
 RSS_FEED = "https://www.youtube.com/feeds/videos.xml?channel_id={}"
