@@ -132,6 +132,7 @@ CHANNELS = [
 "UCY8cdfayYVQc4hqrSWXu4yQ",  # RobsteinOne
 "UCbhS8EgR7Z5RVe-an1jRLiQ",  # PandaJack Productions
 "UC8ahRx5Pg4sXvSYS6wgaU8g",  # Sixo
+"UCRpcYdbTlk3bZsa1EyCFQzg",  # Larkin's Lair
 ]
 
 RSS_FEED = "https://www.youtube.com/feeds/videos.xml?channel_id={}"
