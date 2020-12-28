@@ -58,13 +58,11 @@ color: #AAA;
 line-height: 1.4rem;
 }
 header {
-  background: #888;
   text-align: right;
   margin: 0;
 }
 header a {
   text-decoration:  none;
-  color: #888;
   margin: 0;
   font-size: 0.75rem;
 }
@@ -135,6 +133,8 @@ CHANNELS = [
 "UCbhS8EgR7Z5RVe-an1jRLiQ",  # PandaJack Productions
 "UCxQyiTDqGlKysClRade7opA",  # Ome9asupreme
 "UC64sMcUNRWAUlKeEceZOlRA",  # Gavin Spence
+"UC8ahRx5Pg4sXvSYS6wgaU8g",  # Sixo
+"UCRpcYdbTlk3bZsa1EyCFQzg",  # Larkin's Lair
 ]
 
 RSS_FEED = "https://www.youtube.com/feeds/videos.xml?channel_id={}"
